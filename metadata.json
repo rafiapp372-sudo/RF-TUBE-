@@ -1,0 +1,6 @@
+{
+  "name": "RF TUBE",
+  "description": "Mobile-first social media and video platform combining social feeds, long 16:9 videos, and vertical 9:16 shorts with bilingual English/Bengali support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,186 @@
+{
+  "entities": {
+    "ChannelProfile": {
+      "title": "ChannelProfile",
+      "description": "Public creator channel profile without PII.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "Public channel display name" },
+        "handle": { "type": "string", "description": "Public @handle" },
+        "bio": { "type": "string", "description": "Channel bio" },
+        "avatarKey": { "type": "string", "description": "Avatar asset or URL" },
+        "coverKey": { "type": "string", "description": "Cover asset or URL" },
+        "followersCount": { "type": "integer", "description": "Follower count" },
+        "followingCount": { "type": "integer", "description": "Following count" },
+        "isBanned": { "type": "boolean", "description": "Moderation ban status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp" }
+      },
+      "required": ["userId", "displayName", "handle", "followersCount", "followingCount", "isBanned", "createdAt", "updatedAt"]
+    },
+    "UserPrivateSettings": {
+      "title": "UserPrivateSettings",
+      "description": "Private user account preferences, PII, privacy, and 2FA settings.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "language": { "type": "string", "enum": ["en", "bn"] },
+        "darkMode": { "type": "boolean" },
+        "privacyMode": { "type": "string", "enum": ["PUBLIC", "FOLLOWERS", "PRIVATE"] },
+        "twoFactorEnabled": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "language", "darkMode", "privacyMode", "twoFactorEnabled", "updatedAt"]
+    },
+    "FeedPost": {
+      "title": "FeedPost",
+      "description": "Social feed post (text, photo, or live stream).",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorHandle": { "type": "string" },
+        "caption": { "type": "string" },
+        "postType": { "type": "string", "enum": ["TEXT", "PHOTO", "LIVE"] },
+        "mediaKey": { "type": "string" },
+        "likesCount": { "type": "integer" },
+        "commentsCount": { "type": "integer" },
+        "isRemoved": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "authorName", "authorHandle", "caption", "postType", "likesCount", "commentsCount", "isRemoved", "createdAt", "updatedAt"]
+    },
+    "VideoItem": {
+      "title": "VideoItem",
+      "description": "Long 16:9 or Short 9:16 video document.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorHandle": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "tags": { "type": "array" },
+        "videoKind": { "type": "string", "enum": ["LONG", "SHORT"] },
+        "durationSec": { "type": "integer" },
+        "viewsCount": { "type": "integer" },
+        "watchTimeSec": { "type": "integer" },
+        "likesCount": { "type": "integer" },
+        "commentsCount": { "type": "integer" },
+        "thumbKey": { "type": "string" },
+        "isRemoved": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "authorName", "authorHandle", "title", "description", "tags", "videoKind", "durationSec", "viewsCount", "watchTimeSec", "likesCount", "commentsCount", "isRemoved", "createdAt", "updatedAt"]
+    },
+    "StoryItem": {
+      "title": "StoryItem",
+      "description": "24-hour expiring story.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "caption": { "type": "string" },
+        "mediaKey": { "type": "string" },
+        "expiresAtMs": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "authorName", "caption", "expiresAtMs", "createdAt"]
+    },
+    "ModerationReport": {
+      "title": "ModerationReport",
+      "description": "User or content moderation report.",
+      "type": "object",
+      "properties": {
+        "reporterId": { "type": "string" },
+        "targetType": { "type": "string", "enum": ["POST", "VIDEO", "USER"] },
+        "targetId": { "type": "string" },
+        "reason": { "type": "string" },
+        "status": { "type": "string", "enum": ["OPEN", "RESOLVED", "DISMISSED"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reporterId", "targetType", "targetId", "reason", "status", "createdAt", "updatedAt"]
+    },
+    "UserPlaylist": {
+      "title": "UserPlaylist",
+      "description": "User-created video playlist.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "videoIds": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "videoIds", "createdAt", "updatedAt"]
+    },
+    "UserSavedRef": {
+      "title": "UserSavedRef",
+      "description": "Saved post or video bookmark.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "itemType": { "type": "string", "enum": ["POST", "VIDEO"] },
+        "targetId": { "type": "string" },
+        "title": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "itemType", "targetId", "title", "createdAt"]
+    },
+    "UserActivityEntry": {
+      "title": "UserActivityEntry",
+      "description": "User activity log entry.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "action": { "type": "string" },
+        "detail": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "action", "detail", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/channels/{channelId}": {
+      "schema": { "$ref": "#/entities/ChannelProfile" },
+      "description": "Public creator channel profiles."
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/FeedPost" },
+      "description": "Social feed posts."
+    },
+    "/videos/{videoId}": {
+      "schema": { "$ref": "#/entities/VideoItem" },
+      "description": "Long and short videos."
+    },
+    "/stories/{storyId}": {
+      "schema": { "$ref": "#/entities/StoryItem" },
+      "description": "24-hour expiring stories."
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/ModerationReport" },
+      "description": "Moderation reports queue."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivateSettings" },
+      "description": "Owner-only account settings and PII."
+    },
+    "/users/{userId}/playlists/{playlistId}": {
+      "schema": { "$ref": "#/entities/UserPlaylist" },
+      "description": "Owner-only video playlists."
+    },
+    "/users/{userId}/saved/{savedId}": {
+      "schema": { "$ref": "#/entities/UserSavedRef" },
+      "description": "Owner-only saved posts and videos."
+    },
+    "/users/{userId}/activity/{activityId}": {
+      "schema": { "$ref": "#/entities/UserActivityEntry" },
+      "description": "Owner-only activity log and watch history."
+    }
+  }
+}
